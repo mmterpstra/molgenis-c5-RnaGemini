@@ -1,0 +1,11 @@
+step,protocol,dependencies
+Fastqc,protocols/Fastqc.sh,
+StarRunAlignmentP1,protocols/StarRunAlignmentP1.sh,
+MergeSjdbFileChrStartEnd,protocols/MergeSjdbFileChrStartEnd.sh,StarRunAlignmentP1
+StarRunAlignmentP2,protocols/StarRunAlignmentP2.sh,MergeSjdbFileChrStartEnd
+AddOrReplaceReadGroups,protocols/AddOrReplaceReadGroups.sh,StarRunAlignmentP2
+MergeBamFiles,protocols/MergeBamFiles.sh,AddOrReplaceReadGroups
+MarkDuplicates,protocols/MarkDuplicates.sh,MergeBamFiles
+CollectRnaSeqMetrics,protocols/CollectRnaSeqMetrics.sh,MarkDuplicates
+CollectMultipleMetrics,protocols/CollectMultipleMetrics.sh,MarkDuplicates
+HtseqCount,protocols/HtseqCount.sh,MarkDuplicates
