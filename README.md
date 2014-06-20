@@ -2,7 +2,7 @@ molgenis-c5-RnaGemini
 =====================
 
 
-A pipeline for RNA-seq written in molgenis compute 5. For local use. Written in bash.
+A pipeline for RNA-seq written in molgenis compute 5. For local use. Written in bash. Released to be a guide for rna analysis.
 
 Gemini:For The two-pass usage of rna-STAR
 
@@ -22,18 +22,24 @@ references will follow:
 Does it work?
 -------------
 
-with the right resources every step you see here works
+With the right resources every step you see here works.
 
 + htseq-count (n=2)
 
 How do i set it up?
 -------------------
 
-setup molgenis and all the tools and resources. For your samples modify the samplesheet and run the generated submit script.
+This is on of the hard parts, good luck.
+
++ setup molgenis and all the tools and resources.
++ Get the current release from the releases page.
++ For your samples modify the samplesheet and run the [ generate script ](https://github.com/mmterpstra/molgenis-c5-RnaGemini/GenerateScripts.sh) and then the submit.sh script.
 
 
 Goals
 -----
+
+Things i want to include:
 
 + fluxcapacitor expression
 + gatk variantcalling
