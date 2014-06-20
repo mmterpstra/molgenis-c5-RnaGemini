@@ -22,7 +22,7 @@ references will follow:
 Does it work?
 -------------
 
-With the right tools/resources every step you see here works. The resources can also be downloaded from the GATK(.fa/fai/.dict) bundle/Ensembl(.gtf) and some need to be converted from the .gtf format: .rrna.interval_list/.refflat
+With the right tools/resources every step you see here works. The resources can also be downloaded from the GATK bundle(.fa/fai/.dict)/Ensembl(.gtf) and some need to be converted from the .gtf format: .rrna.interval_list/.refflat
 
 How do i set it up?
 -------------------
