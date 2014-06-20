@@ -1,0 +1,119 @@
+################################################################################
+##general pipeline parameters
+
+queue,test-long
+mem,4
+walltime,23:59:00
+nodes,1
+ppn,1
+defaultInterpreter,#!/bin/bash
+stage,module load
+checkStage,module list
+WORKDIR,/gcc/
+root,${WORKDIR}
+group,oncogenetics
+tmp,tmp01
+#tempDir,${WORKDIR}/groups/${group}/${tmp}/tmp/
+tmpResDir,${WORKDIR}/groups/${group}/${tmp}/resources
+resDir,${root}/resources/
+#resDir,${tmpResDir}
+toolDir,${root}/tools/
+intermediateDir,/gcc/groups/${group}/${tmp}/projects/${project}/
+
+################################################################################
+##Fastqc
+
+fastqcVersion,v0.10.1
+fastqcDir,${intermediateDir}/fastqc/
+fastqcZipExt,_fastqc.zip
+singleEndfastqcZip,${fastqcDir}/${internalId}_${sampleName}.fq${fastqcZipExt}
+pairedEndfastqcZip1,${fastqcDir}/${internalId}_${sampleName}_1.fq${fastqcZipExt}
+pairedEndfastqcZip2,${fastqcDir}/${internalId}_${sampleName}_2.fq${fastqcZipExt}
+################################################################################
+##StarRunAlignmentP1
+
+nTreads,8
+starVersion,2.3.1l
+#string reads1FqGz
+#string reads2FqGz
+genomeLatSpecies,Homo_sapiens
+genomeSpecies,human
+genomeBuild,b37
+genomeGrchBuild,GRCh37
+#starGenomeIndexMain,${resDir}/${genomeBuild}/indices/STAR/
+#starGenomeIndexTmp,${intermediateDir}/${genomeBuild}/indices/STAR/
+#starGenomeIndexTmpSjb,${intermediateDir}/SjbIndex/
+ensemblVersion,75
+onekgGgenomeDecoyFasta,${resDir}/${genomeBuild}/indices/human_g1k_v37_decoy.fasta
+onekgGenomeFasta,${resDir}/${genomeBuild}/indices/human_g1k_v37.fasta
+##/gcc/resources/b37/intervals/Homo_sapiens.GRCh37.71.cut.sorted.gtf make for fluxcapacitor!!! Homo_sapiens.GRCh37.75.cut.sorted.gtf
+##genomeEnsembleAnnotationFile,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.gtf
+genomeEnsembleAnnotationFile,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.gtf
+starAlignmentDir,${intermediateDir}/star/
+starAlignmentPassOneDir,${starAlignmentDir}/${internalId}_${sampleName}/alignmentP1/
+sjdbFileChrStartEnd,${starAlignmentPassOneDir}/SJ.out.tab
+sjdbOverhang,255
+################################################################################
+##Merge sjdbOverhangs? #cat sjdbOverhangList > sjdbOverhangProject? add internalId to protocols...
+projectSjdbFileChrStartEnd,${starAlignmentDir}/SJ.out.merged.tab
+
+################################################################################
+##StarRunAlignmentP2 
+starAlignmentPassTwoDir,${starAlignmentDir}/${internalId}_${sampleName}/alignmentP2/
+
+################################################################################
+##AddOrReplaceGroups
+
+picardVersion,1.102
+addOrReplaceGroupsDir,${intermediateDir}/addOrReplaceReadGroups/
+addOrReplaceGroupsBam,${addOrReplaceGroupsDir}${internalId}_${sampleName}.bam
+addOrReplaceGroupsBai,${addOrReplaceGroupsDir}${internalId}_${sampleName}.bai
+
+################################################################################
+##MergeBamFiles ?? #note the actual picard programme: MergeSamFiles.jar
+MergeBamFilesDir,${intermediateDir}/MergeBams/
+MergeBamFilesBam,${MergeBamFilesDir}${sampleName}.bam
+MergeBamFilesBai,${MergeBamFilesDir}${sampleName}.bai
+
+################################################################################
+##MarkDuplicates
+
+markDuplicatesDir,${intermediateDir}/markDuplicates/
+markDuplicatesBam,${markDuplicatesDir}${sampleName}.bam
+markDuplicatesBai,${markDuplicatesDir}${sampleName}.bai
+markDuplicatesMetrics,${markDuplicatesDir}${sampleName}.metrics.log
+
+################################################################################
+##CollectRnaSeqMetrics
+
+collectRnaSeqMetricsDir,${intermediateDir}/collectRnaSeqMetrics/
+collectRnaSeqMetrics,${collectRnaSeqMetricsDir}${sampleName}.rna_metrics.log
+collectRnaSeqMetricsChart,${collectRnaSeqMetricsDir}${sampleName}.chart.pdf
+genesRefFlat,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.refflat
+rRnaIntervalList,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.rrna.sorted.interval_list
+
+################################################################################
+##CollectMultipleMetrics
+RVersion,3.0.2
+collectMultipleMetricsDir,${intermediateDir}/collectMultipleMetrics/
+collectMultipleMetricsPrefix, ${intermediateDir}/collectMultipleMetrics/${sampleName}.multiplemetrics
+
+
+################################################################################
+##Htseq-count
+
+htseqCountDir,${intermediateDir}/htseq-count/
+htseqCountCounts,${intermediateDir}/htseq-count/${sampleName}.tsv
+anacondaVersion,1.8.0
+samtoolsVersion,0.1.19
+
+################################################################################
+#CreateProjectMd aka CreateProjectMarkdown
+
+projectMarkdown,${intermediateDir}/${project}.summary.md
+
+
+#test projectsamplesheet
+#project,sampleName,sampleprep,barcode,seqtype,sequencer,reads1FqGz,reads2FqGz
+#test,samplePE,000001,AAAAAA,illumina,hiseq2500,/gcc/groups/oncogenetics/${tmp}/projects/resourcesRNASeq/head_40000_120830_SN163_0474_BD0WDYACXX_L5_ACTGAT_1.fq.gz,/gcc/groups/oncogenetics/${tmp}/projects/resourcesRNASeq/head_40000_120830_SN163_0474_BD0WDYACXX_L5_ACTGAT_2.fq.gz
+#test,sampleSE,000001,AAAAAA,illumina,hiseq2500,/gcc/groups/oncogenetics/${tmp}/projects/resourcesRNASeq/head_40000_120830_SN163_0474_BD0WDYACXX_L5_ACTGAT_1.fq.gz,
