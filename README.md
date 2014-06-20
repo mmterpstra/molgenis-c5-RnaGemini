@@ -2,7 +2,7 @@ molgenis-c5-RnaGemini
 =====================
 
 
-A pipeline for RNA-seq written in molgenis compute 5. For local use. Written in bash. Released to be a guide for rna analysis.
+A pipeline for reference based RNA-seq written in [molgenis compute 5](http://www.molgenis.org/wiki/ComputeStart) , also see their pipeline explaination at https://github.com/molgenis/molgenis-pipelines. For local use. Written in bash. Released to be a guide for rna analysis or a solution when you are able to apply the pipeline.
 
 Gemini:For The two-pass usage of rna-STAR
 
@@ -42,6 +42,7 @@ Goals
 Things i want to include:
 
 + fluxcapacitor expression
-+ gatk variantcalling
 + final rapport in markdown
++ gatk variantcalling
++ fusion detection?
 + setup of tmp files for automatic cleanup
