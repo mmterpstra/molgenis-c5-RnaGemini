@@ -11,15 +11,17 @@ Applied Programmes
 
 references will follow:
 
-+ Fastqc [website](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
-+ rna-STAR [website](http://code.google.com/p/rna-star/) [pubmed abstract](http://www.ncbi.nlm.nih.gov/pubmed/23104886)
-+ picard-tools [website](http://picard.sourceforge.net/) 
-+ htseq-count [website](www-huber.embl.de/users/anders/HTSeq/doc/index.html) [preprint](http://biorxiv.org/content/early/2014/02/20/002824)
+| Name         | project website                                                                            | Article          |
+| ------------ | ------------------------------------------------------------------------------------------ | ---------------- |
+| Fastqc       | [bioinformatics.babraham.ac.uk](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) | |
+| rna-STAR     | [code.google](http://code.google.com/p/rna-star/)                                          | [pubmed abstract](http://www.ncbi.nlm.nih.gov/pubmed/23104886) |
+| picard-tools | [picard.sourceforge](http://picard.sourceforge.net/) | |
+| htseq-count  | [embl.de](www-huber.embl.de/users/anders/HTSeq/doc/index.html)                            |  [preprint](http://biorxiv.org/content/early/2014/02/20/002824) |
 
 to be used:
 
 + (markup/pandoc)
-+ (Genome Analysis Toolkit...)
++ (Genome Analysis Toolkit (abbr: GATK)...)
 + Fluxcapacitor
 
 Resource links
@@ -27,7 +29,11 @@ Resource links
 
 The resource links for installing references/preparing them
 
-
+| name          | site 
+| ------------- | ---- 
+| GATK Bundle   | [ human reference ](http://gatkforums.broadinstitute.org/discussion/1213/what-s-in-the-resource-bundle-and-how-can-i-get-it)
+| Ensembl       | [reference/gtf dowload](http://www.ensembl.org/info/data/ftp/index.html)
+| UCSC Tools    | [ format conversion/additional tools ](http://hgdownload.soe.ucsc.edu/admin/exe/)
 
 Does it work?
 -------------
