@@ -72,3 +72,7 @@ Things i want to include:
 + gatk variantcalling
 + fusion detection?
 + setup of tmp files for automatic cleanup
+
+Licence
+-------
+the scripts are provided as [Academic Free](http://opensource.org/licenses/AFL-3.0). Especially the custom made perl scripts for now.
