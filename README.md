@@ -75,4 +75,4 @@ Things i want to include:
 
 Licence
 -------
-the scripts are provided as [Academic Free](http://opensource.org/licenses/AFL-3.0). Especially the custom made perl scripts for now.
+the scripts are provided as [Academic Free](http://opensource.org/licenses/AFL-3.0). Licencing information om the third party software is available on their website.
