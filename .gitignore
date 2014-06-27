@@ -42,3 +42,9 @@ Thumbs.db
 # Project specific files #
 ##########################
 worksheet.csv
+.compute.properties
+parameters.molgenis.csv
+
+# gedit dirt             #
+##########################
+*~
