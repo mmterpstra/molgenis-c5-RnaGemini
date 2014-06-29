@@ -1,13 +1,28 @@
 molgenis-c5-RnaGemini
 =====================
 
+This is still work in progress so please ignore errors in this intro.
 
-A pipeline for reference based RNA-seq written in [molgenis compute 5](http://www.molgenis.org/wiki/ComputeStart) , also see their pipeline explaination at https://github.com/molgenis/molgenis-pipelines. For local use. Written in bash. Released to be a guide for rna analysis or a solution when you are able to apply the pipeline.
+A pipeline for reference based RNA-seq written in [molgenis compute 5](http://www.molgenis.org/wiki/ComputeStart) , also see their pipeline explaination at https://github.com/molgenis/molgenis-pipelines. For local use and in the future maybe on the [biggrid](http://www.biggrid.nl/). Written in bash. Released to be a guide for rna analysis or a solution when you are able to apply the pipeline.
 
 Gemini:For The two-pass usage of rna-STAR
 
-Applied Programmes
+Credits
 ------------------
+
+Credits for Applied Programmes/people.
+mmterpstra 
+
++ writing almost everything
+
+
+PatrickDeelen / DashaZhernakova
+
++ using star for any kind of data
+
+freerkvandijk / rest of the [ gcc crew ](https://github.com/molgenis/molgenis-pipelines/graphs/contributors) 
+
++ for writing examples an learning how to use/apply molgenis pipelines
 
 references will follow:
 
@@ -15,9 +30,9 @@ references will follow:
 | ------------ | ------------------------------------------------------------------------------------------ | ---------------- |
 | Fastqc       | [bioinformatics.babraham.ac.uk](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) | |
 | rna-STAR     | [code.google](http://code.google.com/p/rna-star/)                                          | [pubmed abstract](http://www.ncbi.nlm.nih.gov/pubmed/23104886) |
-| picard-tools | [picard.sourceforge](http://picard.sourceforge.net/) | |
-| htseq-count  | [embl.de](www-huber.embl.de/users/anders/HTSeq/doc/index.html)                            |  [preprint](http://biorxiv.org/content/early/2014/02/20/002824) |
-
+| picard-tools | [picard.sourceforge](http://picard.sourceforge.net/) | [instructions below faq](http://picard.sourceforge.net/) |
+| htseq-count  | [embl.de](www-huber.embl.de/users/anders/HTSeq/doc/index.html)                             |  [preprint](http://biorxiv.org/content/early/2014/02/20/002824) |
+| Gatk toolkit | [broadgatk](http://www.broadinstitute.org/gatk/)                                           | [instructions here](https://www.broadinstitute.org/gatk/about/citing-gatk)
 to be used:
 
 + (markup/pandoc)
@@ -47,19 +62,26 @@ This is one of the hard parts, good luck.
 
 + setup molgenis and all the tools and resources.
 + Get the current release from the releases page.
-+ For your samples modify the samplesheet and run the [ generate script ](https://github.com/mmterpstra/molgenis-c5-RnaGemini/GenerateScripts.sh) and then the submit.sh script.
++ For your samples modify the samplesheet and run the [ generate script ](https://github.com/mmterpstra/molgenis-c5-RnaGemini/GenerateScripts.sh) and run the submit.sh script.
+
+
+Use
+----
 
 
 I've got the results of the pipeline, what can do with them?
-------------------------------------------------------------
 
 You can ...
 
-+ write a publication
 + view your data in IGV
 + do a post analysis in R for differential expression
++ Get more annotations for filtering datasets from [Ensembl biomart](http://www.ensembl.org/biomart/martview/8a629a52cd341bccd00ff0c1612340b4)
++ link it to any other experiment using [bedtools](https://github.com/arq5x/bedtools2)
++ start adding the references to your publication
 
 ~~in the future you can ...~~
+
++ find harmful mutations: do a linkage analysis on your variants
 
 
 Goals
