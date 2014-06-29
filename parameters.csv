@@ -44,7 +44,7 @@ genomeGrchBuild,GRCh37
 #starGenomeIndexTmp,${intermediateDir}/${genomeBuild}/indices/STAR/
 #starGenomeIndexTmpSjb,${intermediateDir}/SjbIndex/
 ensemblVersion,75
-onekgGgenomeDecoyFasta,${resDir}/${genomeBuild}/indices/human_g1k_v37_decoy.fasta
+#onekgGgenomeDecoyFasta,${resDir}/${genomeBuild}/indices/human_g1k_v37_decoy.fasta
 onekgGenomeFasta,${resDir}/${genomeBuild}/indices/human_g1k_v37.fasta
 ##/gcc/resources/b37/intervals/Homo_sapiens.GRCh37.71.cut.sorted.gtf make for fluxcapacitor!!! Homo_sapiens.GRCh37.75.cut.sorted.gtf
 ##genomeEnsembleAnnotationFile,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.gtf
@@ -106,6 +106,26 @@ htseqCountDir,${intermediateDir}/htseq-count/
 htseqCountCounts,${intermediateDir}/htseq-count/${sampleName}.tsv
 anacondaVersion,1.8.0
 samtoolsVersion,0.1.19
+
+################################################################################
+#GatkSpitAndTrim
+
+gatkVersion,3.1-1-g07a4bf8
+splitAndTrimDir,${intermediateDir}/splitAndTrim/
+splitAndTrimBam,${splitAndTrimDir}${sampleName}.bam
+splitAndTrimBai,${splitAndTrimDir}${sampleName}.bai
+
+################################################################################
+#GatkRealignerTargetCreator
+
+indelRealignmentDir,${intermediateDir}/indelRealignment/
+realignmentIntervals,${indelRealignmentDir}/realignmentIntervals.list
+goldStandardVcf,${resDir}/${genomeBuild}/sv/1000G/Mills_and_1000G_gold_standard.indels.b37.vcf
+
+################################################################################
+#IndelRealigner
+IndelRealignmentBam,${indelRealignmentDir}${sampleName}.bam
+IndelRealignmentBai,${indelRealignmentDir}${sampleName}.bai
 
 ################################################################################
 #CreateProjectMd aka CreateProjectMarkdown

@@ -36,17 +36,18 @@ if [ ${#reads2FqGz} -eq 0 ]; then
 	cd ${fastqcDir}
 	
 	##################################################################
-	
+	echo
 	echo "## "$(date)" reads1FqGz"
 	fastqc --noextract ${reads1FqGz} --outdir ${fastqcDir}
-
+	echo
 	cp -v ${fastqcDir}/$(basename ${reads1FqGz} .gz)${fastqcZipExt} ${singleEndfastqcZip}
 
 	##################################################################
 	
 	cd $OLDPWD
 
-	putFile $(basename ${reads1FqGz} .gz)${fastqcZipExt}
+	putFile ${fastqcDir}/$(basename ${reads1FqGz} .gz)${fastqcZipExt}
+	putFile ${singleEndfastqcZip}
 
 else
 	echo "## "$(date)" Started paired end fastqc"
@@ -64,22 +65,25 @@ else
 	cd ${fastqcDir}
 	
 	##################################################################
+	echo
 	echo "## "$(date)" reads1FqGz"
 	fastqc --noextract ${reads1FqGz} --outdir ${fastqcDir}
 	
-	cp -v ${fastqcDir}/$(basename ${reads1FqGz} .gz)${fastqcZipExt} ${fastqcDir}/${sampleName}_1.fq${fastqcZipExt}
-	
+	cp -v ${fastqcDir}/$(basename ${reads1FqGz} .gz)${fastqcZipExt} ${pairedEndfastqcZip1}
+	echo
 	echo "## "$(date)" reads2FqGz"
 	fastqc --noextract ${reads2FqGz} --outdir ${fastqcDir}
-	
-	cp -v ${fastqcDir}/$(basename ${reads2FqGz} .gz)${fastqcZipExt} ${fastqcDir}/${sampleName}_2.fq${fastqcZipExt}
+	echo
+	cp -v ${fastqcDir}/$(basename ${reads2FqGz} .gz)${fastqcZipExt} ${pairedEndfastqcZip2}
 
 	##################################################################
 	cd $OLDPWD
 		
-	putFile $(basename ${reads1FqGz} .gz)${fastqcZipExt}
-	putFile $(basename ${reads2FqGz} .gz)${fastqcZipExt}
-
+	putFile ${fastqcDir}/$(basename ${reads1FqGz} .gz)${fastqcZipExt}
+	putFile ${fastqcDir}/$(basename ${reads2FqGz} .gz)${fastqcZipExt}
+	putFile ${pairedEndfastqcZip1}
+	putFile ${pairedEndfastqcZip2}
+	
 fi
 
 if [ ! -z "$PBS_JOBID" ]; then

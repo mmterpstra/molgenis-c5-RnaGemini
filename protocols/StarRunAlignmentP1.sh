@@ -12,7 +12,6 @@
 #string genomeBuild
 #string genomeGrchBuild
 #string ensemblVersion
-#string onekgGgenomeDecoyFasta
 #string onekgGenomeFasta
 #string genomeEnsembleAnnotationFile
 #string starAlignmentDir 
@@ -25,7 +24,7 @@
 #string reads2FqGz
 
 ## echo declared strings
-echo $stage
+#echo $stage
 
 
 echo "## "$(date)" ##  $0 Started "
