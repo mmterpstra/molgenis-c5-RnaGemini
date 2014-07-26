@@ -79,10 +79,6 @@ You can ...
 + link it to any other experiment using [bedtools](https://github.com/arq5x/bedtools2)
 + start adding the references to your publication
 
-~~in the future you can ...~~
-
-+ find harmful mutations: do a linkage analysis on your variants
-
 
 Goals
 -----
@@ -91,10 +87,13 @@ Things i want to include:
 
 + fluxcapacitor expression
 + final rapport in markdown
-+ gatk variantcalling
++ gatk variant detection
++ Find harmful mutations: filter by maf and effect on gene
++ Circos data representation of (harmfule/rare) variants
 + fusion detection?
 + setup of tmp files for automatic cleanup
 
 Licence
 -------
-the scripts are provided as [Academic Free](http://opensource.org/licenses/AFL-3.0). Licencing information om the third party software is available on their website.
+The scripts are provided as [Academic Free](http://opensource.org/licenses/AFL-3.0). Licencing information om the third party software is available on their website.
+
