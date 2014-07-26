@@ -1,7 +1,7 @@
 
 ################################################################################
 ##general pipeline parameters
-
+#
 queue,test-long
 mem,4
 walltime,23:59:00
@@ -21,10 +21,10 @@ resDir,${root}/resources/
 #resDir,${tmpResDir}
 toolDir,${root}/tools/
 intermediateDir,/gcc/groups/${group}/${tmp}/projects/${project}/
-
+#
 ################################################################################
 ##Fastqc
-
+#
 fastqcVersion,v0.10.1
 fastqcDir,${intermediateDir}/fastqc/
 fastqcZipExt,_fastqc.zip
@@ -33,7 +33,7 @@ pairedEndfastqcZip1,${fastqcDir}/${internalId}_${sampleName}_1.fq${fastqcZipExt}
 pairedEndfastqcZip2,${fastqcDir}/${internalId}_${sampleName}_2.fq${fastqcZipExt}
 ################################################################################
 ##StarRunAlignmentP1
-
+#
 nTreads,8
 starVersion,2.3.1l
 #string reads1FqGz
@@ -58,58 +58,64 @@ sjdbOverhang,255
 ################################################################################
 ##Merge sjdbOverhangs? #cat sjdbOverhangList > sjdbOverhangProject? add internalId to protocols...
 projectSjdbFileChrStartEnd,${starAlignmentDir}/SJ.out.merged.tab
-
+#
 ################################################################################
 ##StarRunAlignmentP2 
 starAlignmentPassTwoDir,${starAlignmentDir}/${internalId}_${sampleName}/alignmentP2/
-
+#
 ################################################################################
 ##AddOrReplaceGroups
-
+#
 picardVersion,1.102
 addOrReplaceGroupsDir,${intermediateDir}/addOrReplaceReadGroups/
 addOrReplaceGroupsBam,${addOrReplaceGroupsDir}${internalId}_${sampleName}.bam
 addOrReplaceGroupsBai,${addOrReplaceGroupsDir}${internalId}_${sampleName}.bai
-
+#
 ################################################################################
 ##MergeBamFiles ?? #note the actual picard programme: MergeSamFiles.jar
 MergeBamFilesDir,${intermediateDir}/MergeBams/
 MergeBamFilesBam,${MergeBamFilesDir}${sampleName}.bam
 MergeBamFilesBai,${MergeBamFilesDir}${sampleName}.bai
-
+#
 ################################################################################
 ##MarkDuplicates
-
+#
 markDuplicatesDir,${intermediateDir}/markDuplicates/
 markDuplicatesBam,${markDuplicatesDir}${sampleName}.bam
 markDuplicatesBai,${markDuplicatesDir}${sampleName}.bai
 markDuplicatesMetrics,${markDuplicatesDir}${sampleName}.metrics.log
-
+#
 ################################################################################
 ##CollectRnaSeqMetrics
-
+#
 collectRnaSeqMetricsDir,${intermediateDir}/collectRnaSeqMetrics/
 collectRnaSeqMetrics,${collectRnaSeqMetricsDir}${sampleName}.rna_metrics.log
 collectRnaSeqMetricsChart,${collectRnaSeqMetricsDir}${sampleName}.chart.pdf
+<<<<<<< HEAD
 genesRefFlat,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.refflat
 rRnaIntervalList,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.rrna.interval_list
 
+=======
+genesRefFlat,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.refflat
+rRnaIntervalList,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.rrna.sorted.interval_list
+#
+>>>>>>> b548c105d6766116d4eceb9eb1bca1c6ec91a12d
 ################################################################################
 ##CollectMultipleMetrics
 RVersion,3.0.2
 collectMultipleMetricsDir,${intermediateDir}/collectMultipleMetrics/
 collectMultipleMetricsPrefix, ${intermediateDir}/collectMultipleMetrics/${sampleName}.multiplemetrics
-
-
+#
 ################################################################################
 ##Htseq-count
-
+#
 htseqCountDir,${intermediateDir}/htseq-count/
 htseqCountCounts,${intermediateDir}/htseq-count/${sampleName}.tsv
 anacondaVersion,1.8.0
 samtoolsVersion,0.1.19
-
+#
 ################################################################################
+<<<<<<< HEAD
 #FluxCapacitor
 
 fluxcapacitorVersion,1.6.1
@@ -126,10 +132,15 @@ fluxcapacitorExpressionGTF,${fluxcapacitorDir}/${sampleName}.${genomeGrchBuild}.
 ################################################################################
 #GatkSpitAndTrim #note this also contains some quality conversion:which should be moved to its own protocol for paralelisation
 
+=======
+#GatkSpitAndTrim
+#
+>>>>>>> b548c105d6766116d4eceb9eb1bca1c6ec91a12d
 gatkVersion,3.1-1-g07a4bf8
 splitAndTrimDir,${intermediateDir}/splitAndTrim/
 splitAndTrimBam,${splitAndTrimDir}${sampleName}.bam
 splitAndTrimBai,${splitAndTrimDir}${sampleName}.bai
+<<<<<<< HEAD
 ################################################################################
 ##VCF for GATK
 #
@@ -187,13 +198,29 @@ haplotyperVcfIdx,${haplotyperVcf}.idx
 ################################################################################
 #variant filtration
 
+=======
+#
+################################################################################
+#GatkRealignerTargetCreator
+#
+indelRealignmentDir,${intermediateDir}/indelRealignment/
+realignmentIntervals,${indelRealignmentDir}/realignmentIntervals.list
+goldStandardVcf,${resDir}/${genomeBuild}/sv/1000G/Mills_and_1000G_gold_standard.indels.b37.vcf
+#
+################################################################################
+#IndelRealigner
+IndelRealignmentBam,${indelRealignmentDir}${sampleName}.bam
+IndelRealignmentBai,${indelRealignmentDir}${sampleName}.bai
+#
+>>>>>>> b548c105d6766116d4eceb9eb1bca1c6ec91a12d
 ################################################################################
 #CreateProjectMd aka CreateProjectMarkdown
-
+#
 projectMarkdown,${intermediateDir}/${project}.summary.md
-
-
+#
+#
 #test projectsamplesheet
 #project,sampleName,sampleprep,barcode,seqtype,sequencer,reads1FqGz,reads2FqGz
 #test,samplePE,000001,AAAAAA,illumina,hiseq2500,/gcc/groups/oncogenetics/${tmp}/projects/resourcesRNASeq/head_40000_120830_SN163_0474_BD0WDYACXX_L5_ACTGAT_1.fq.gz,/gcc/groups/oncogenetics/${tmp}/projects/resourcesRNASeq/head_40000_120830_SN163_0474_BD0WDYACXX_L5_ACTGAT_2.fq.gz
 #test,sampleSE,000001,AAAAAA,illumina,hiseq2500,/gcc/groups/oncogenetics/${tmp}/projects/resourcesRNASeq/head_40000_120830_SN163_0474_BD0WDYACXX_L5_ACTGAT_1.fq.gz,
+#
