@@ -5,6 +5,7 @@
 #string checkStage
 #string gatkVersion
 #string onekgGenomeFasta
+#list reads2FqGz
 #list splitAndTrimBam
 #list splitAndTrimBai
 #string indelRealignmentDir
@@ -41,9 +42,8 @@ java -Xmx8g -jar $GATK_HOME/GenomeAnalysisTK.jar \
  -R ${onekgGenomeFasta} \
  $inputs \
  -o ${realignmentIntervals} \
- --known ${goldStandardVcf} \
- -U ALLOW_N_CIGAR_READS \
- --allow_potentially_misencoded_quality_scores
+ -known ${goldStandardVcf} \
+ -U ALLOW_N_CIGAR_READS
 
 putFile ${realignmentIntervals}
 

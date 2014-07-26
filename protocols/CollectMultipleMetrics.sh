@@ -4,6 +4,7 @@
 #string checkStage
 #string picardVersion
 #string RVersion
+#string reads2FqGz
 #string collectMultipleMetricsDir
 #string collectMultipleMetricsPrefix
 #string onekgGenomeFasta
@@ -40,7 +41,7 @@ ${checkStage}
 mkdir -p ${collectMultipleMetricsDir}
 
 insertSizeMetrics=""
-if [ ${#readsFqGz2} -ne 0 ]; then
+if [ ${#reads2FqGz} -ne 0 ]; then
 	insertSizeMetrics="PROGRAM=CollectInsertSizeMetrics"
 fi
 
@@ -63,7 +64,7 @@ putFile ${collectMultipleMetricsPrefix}.quality_by_cycle.pdf
 putFile ${collectMultipleMetricsPrefix}.quality_distribution_metrics 
 putFile ${collectMultipleMetricsPrefix}.quality_distribution.pdf
 
-if [ ${#readsFqGz2} -ne 0 ]; then
+if [ ${#reads2FqGz} -ne 0 ]; then
 	putFile ${collectMultipleMetricsPrefix}.insert_size_histogram.pdf
 	putFile ${collectMultipleMetricsPrefix}.insert_size_metrics 
 fi

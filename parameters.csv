@@ -1,3 +1,4 @@
+
 ################################################################################
 ##general pipeline parameters
 
@@ -14,7 +15,8 @@ root,${WORKDIR}
 group,oncogenetics
 tmp,tmp01
 #tempDir,${WORKDIR}/groups/${group}/${tmp}/tmp/
-tmpResDir,${WORKDIR}/groups/${group}/${tmp}/resources
+#fix
+#tmpResDir,${WORKDIR}/groups/${group}/${tmp}/resources
 resDir,${root}/resources/
 #resDir,${tmpResDir}
 toolDir,${root}/tools/
@@ -48,7 +50,7 @@ ensemblVersion,75
 onekgGenomeFasta,${resDir}/${genomeBuild}/indices/human_g1k_v37.fasta
 ##/gcc/resources/b37/intervals/Homo_sapiens.GRCh37.71.cut.sorted.gtf make for fluxcapacitor!!! Homo_sapiens.GRCh37.75.cut.sorted.gtf
 ##genomeEnsembleAnnotationFile,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.gtf
-genomeEnsembleAnnotationFile,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.gtf
+genomeEnsembleAnnotationFile,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.gtf
 starAlignmentDir,${intermediateDir}/star/
 starAlignmentPassOneDir,${starAlignmentDir}/${internalId}_${sampleName}/alignmentP1/
 sjdbFileChrStartEnd,${starAlignmentPassOneDir}/SJ.out.tab
@@ -89,8 +91,8 @@ markDuplicatesMetrics,${markDuplicatesDir}${sampleName}.metrics.log
 collectRnaSeqMetricsDir,${intermediateDir}/collectRnaSeqMetrics/
 collectRnaSeqMetrics,${collectRnaSeqMetricsDir}${sampleName}.rna_metrics.log
 collectRnaSeqMetricsChart,${collectRnaSeqMetricsDir}${sampleName}.chart.pdf
-genesRefFlat,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.refflat
-rRnaIntervalList,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.rrna.sorted.interval_list
+genesRefFlat,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.refflat
+rRnaIntervalList,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.rrna.interval_list
 
 ################################################################################
 ##CollectMultipleMetrics
@@ -108,24 +110,82 @@ anacondaVersion,1.8.0
 samtoolsVersion,0.1.19
 
 ################################################################################
-#GatkSpitAndTrim
+#FluxCapacitor
+
+fluxcapacitorVersion,1.6.1
+fluxcapacitorDir,${intermediateDir}/fluxcapacitor/
+fluxcapacitorGTF,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.fluxcapacitor.sorted.gtf
+fluxcapacitorExpressionGTF,${fluxcapacitorDir}/${sampleName}.${genomeGrchBuild}.${ensemblVersion}.fluxcapacitor.sorted.gtf
+
+################################################################################
+#MergeFluxCapacitorGtf
+
+################################################################################
+#GtfToTable
+
+################################################################################
+#GatkSpitAndTrim #note this also contains some quality conversion:which should be moved to its own protocol for paralelisation
 
 gatkVersion,3.1-1-g07a4bf8
 splitAndTrimDir,${intermediateDir}/splitAndTrim/
 splitAndTrimBam,${splitAndTrimDir}${sampleName}.bam
 splitAndTrimBai,${splitAndTrimDir}${sampleName}.bai
+################################################################################
+##VCF for GATK
+#
+
+goldStandardVcf,${resDir}/${genomeBuild}/sv/1000G/Mills_and_1000G_gold_standard.indels.b37.vcf
+goldStandardVcfIdx,${goldStandardVcf}.idx
+
+oneKgPhase1IndelsVcf,${resDir}/${genomeBuild}/sv/1000G/1000G_phase1.indels.b37.vcf
+oneKgPhase1IndelsVcfIdx,${oneKgPhase1IndelsVcf}.idx
+
+dbsnpVcf,${resDir}/${genomeBuild}/snp/dbSNP/dbsnp_137.b37.vcf
+dbsnpVcfIdx,${dbsnpVcf}.idx
 
 ################################################################################
 #GatkRealignerTargetCreator
 
+#because want to use alternative not local assembling callers on the same data like mutect/varscan etc
+
 indelRealignmentDir,${intermediateDir}/indelRealignment/
 realignmentIntervals,${indelRealignmentDir}/realignmentIntervals.list
-goldStandardVcf,${resDir}/${genomeBuild}/sv/1000G/Mills_and_1000G_gold_standard.indels.b37.vcf
 
 ################################################################################
 #IndelRealigner
-IndelRealignmentBam,${indelRealignmentDir}${sampleName}.bam
-IndelRealignmentBai,${indelRealignmentDir}${sampleName}.bai
+
+indelRealignmentBam,${indelRealignmentDir}${sampleName}.bam
+indelRealignmentBai,${indelRealignmentDir}${sampleName}.bai
+#for known realgnment when using haplotype caller because the haplotypecaller will consider multiple haplotypes instead of one when the GatkRealignerTargetCreator step is used, then later on the haplotyper can out put yet another bam file...to use for simple callers.
+indelRealignmentTargets,${resDir}/${genomeBuild}/intervals/1000G_phase1.indels_Mills_and_1000G_gold_standard.indels.b37.human_g1k_v37.intervals
+
+
+################################################################################
+#BSQR(+PrintReads) default
+bsqrDir,${intermediateDir}/baseQualityScoreRecalibration/
+
+bsqrBam,${bsqrDir}${sampleName}.bam
+bsqrBai,${bsqrDir}${sampleName}.bai
+bsqrBeforeGrp,${bsqrDir}${sampleName}.before.grp
+
+################################################################################
+#(BSQR+)AnalyseCovariants default
+analyseCovarsDir,${intermediateDir}/CovariantAnalysis/
+bsqrAfterGrp,${bsqrDir}${sampleName}.after.grp
+#stuffs that is missing 
+
+################################################################################
+#haplotypecaller rna mode "-recoverDanglingHeads -dontUseSoftClippedBases -stand_call_conf 20.0 -stand_emit_conf 20.0" here: http://gatkforums.broadinstitute.org/discussion/3891/best-practices-for-variant-calling-on-rnaseq
+haplotyperDir,${intermediateDir}/haplotypeCaller/
+haplotyperRealignmentBam,${haplotyperDir}${sampleName}.bam
+haplotyperRealignmentBai,${haplotyperDir}${sampleName}.bam
+haplotyperVcf,${haplotyperDir}${project}.vcf
+haplotyperVcfIdx,${haplotyperVcf}.idx
+################################################################################
+#variant annotation
+
+################################################################################
+#variant filtration
 
 ################################################################################
 #CreateProjectMd aka CreateProjectMarkdown

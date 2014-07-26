@@ -11,8 +11,8 @@
 #string realignmentIntervals
 #string indelRealignmentDir
 
-#string IndelRealignmentBam
-#string IndelRealignmentBai
+#string indelRealignmentBam
+#string indelRealignmentBai
 
 #pseudo from gatk forum (link: http://www.broadinstitute.org/gatk/gatkdocs/org_broadinstitute_sting_gatk_walkers_indels_IndelRealigner):
 #java -Xmx4g -jar GenomeAnalysisTK.jar -T IndelRealigner -R ref.fa -I input.bam -targetIntervals intervalListFromRTC.intervals -o realignedBam.bam [-known /path/to/indels.vcf] -U ALLOW_N_CIGAR_READS --allow_potentially_misencoded_quality_scores
@@ -20,8 +20,8 @@
 echo "## "$(date)" ##  $0 Started "
 
 alloutputsexist \
- ${IndelRealignmentBam} \
- ${IndelRealignmentBai}
+ ${indelRealignmentBam} \
+ ${indelRealignmentBai}
 
 ${stage} GATK/${gatkVersion}
 ${checkStage}
@@ -36,17 +36,15 @@ fi
 
 
 java -Xmx8g -jar $GATK_HOME/GenomeAnalysisTK.jar \
- -nt 4 \
  -T IndelRealigner \
  -R ${onekgGenomeFasta} \
  -I ${splitAndTrimBam} \
- -o ${IndelRealignmentBam} \
+ -o ${indelRealignmentBam} \
  -targetIntervals ${realignmentIntervals} \
- --known ${goldStandardVcf} \
- -U ALLOW_N_CIGAR_READS \
- --allow_potentially_misencoded_quality_scores
+ -known ${goldStandardVcf} \
+ -U ALLOW_N_CIGAR_READS
 
-putFile ${IndelRealignmentBam}
-putFile ${IndelRealignmentBai}
+putFile ${indelRealignmentBam}
+putFile ${indelRealignmentBai}
 
 echo "## "$(date)" ##  $0 Done "
