@@ -7,6 +7,7 @@
 #string fluxcapacitorVersion
 #string indelRealignmentBam
 #string indelRealignmentBai
+#string sampleName
 
 #string fluxcapacitorDir
 #string fluxcapacitorGTF
@@ -38,7 +39,18 @@ fi
 
 #commandline:flux-capacitor --force -a /gcc//groups/oncogenetics/tmp01/resources/b37/intervals/Homo_sapiens.GRCh37.75.fluxcapacitor.sorted.gtf -i /gcc/groups/oncogenetics/tmp01/projects/test2//indelRealignment/samplePE.bam -o /gcc/groups/oncogenetics/tmp01/projects/test2//fluxcapacitor//samplePE.GRCh37.75.fluxcapacitor.sorted.gtf -m PAIRED --coverage-file /gcc/groups/oncogenetics/tmp01/projects/test2//fluxcapacitor//samplePE.GRCh37.75.fluxcapacitor.sorted.gtf.coverage.flux --stats-file /gcc/groups/oncogenetics/tmp01/projects/test2//fluxcapacitor//samplePE.GRCh37.75.fluxcapacitor.sorted.gtf.stats.log --tmp-dir /gcc/groups/oncogenetics/tmp01/projects/test2//fluxcapacitor/  --keep-sorted MAPPING_FILE --threads 4 --disable-file-check
 
-flux-capacitor --force -a ${fluxcapacitorGTF} -i ${indelRealignmentBam} -o ${fluxcapacitorExpressionGTF} -m $readDescriptor -r --tmp-dir ${fluxcapacitorDir} --keep-sorted MAPPING_FILE --threads 4 --disable-file-check
+flux-capacitor \
+ --force \
+ -a ${fluxcapacitorGTF} \
+ -i ${indelRealignmentBam} \
+ -m $readDescriptor \
+ -r \
+ --tmp-dir ${fluxcapacitorDir} \
+ --keep-sorted MAPPING_FILE \
+ --threads 4 \
+ --disable-file-check |
+perl \
+ -wpe 's/; reads /; '${sampleName}'.reads /; s/; RPKM /; '${sampleName}'.RPKM /' > ${fluxcapacitorExpressionGTF}
 
 putFile ${fluxcapacitorExpressionGTF}
 

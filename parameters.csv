@@ -91,15 +91,10 @@ markDuplicatesMetrics,${markDuplicatesDir}${sampleName}.metrics.log
 collectRnaSeqMetricsDir,${intermediateDir}/collectRnaSeqMetrics/
 collectRnaSeqMetrics,${collectRnaSeqMetricsDir}${sampleName}.rna_metrics.log
 collectRnaSeqMetricsChart,${collectRnaSeqMetricsDir}${sampleName}.chart.pdf
-<<<<<<< HEAD
+
 genesRefFlat,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.refflat
 rRnaIntervalList,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.rrna.interval_list
 
-=======
-genesRefFlat,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.refflat
-rRnaIntervalList,${tmpResDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.rrna.sorted.interval_list
-#
->>>>>>> b548c105d6766116d4eceb9eb1bca1c6ec91a12d
 ################################################################################
 ##CollectMultipleMetrics
 RVersion,3.0.2
@@ -115,13 +110,12 @@ anacondaVersion,1.8.0
 samtoolsVersion,0.1.19
 #
 ################################################################################
-<<<<<<< HEAD
 #FluxCapacitor
 
 fluxcapacitorVersion,1.6.1
 fluxcapacitorDir,${intermediateDir}/fluxcapacitor/
 fluxcapacitorGTF,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.fluxcapacitor.sorted.gtf
-fluxcapacitorExpressionGTF,${fluxcapacitorDir}/${sampleName}.${genomeGrchBuild}.${ensemblVersion}.fluxcapacitor.sorted.gtf
+fluxcapacitorExpressionGTF,${fluxcapacitorDir}/${sampleName}.${genomeGrchBuild}.${ensemblVersion}.expression.gtf
 
 ################################################################################
 #MergeFluxCapacitorGtf
@@ -131,16 +125,12 @@ fluxcapacitorExpressionGTF,${fluxcapacitorDir}/${sampleName}.${genomeGrchBuild}.
 
 ################################################################################
 #GatkSpitAndTrim #note this also contains some quality conversion:which should be moved to its own protocol for paralelisation
-
-=======
 #GatkSpitAndTrim
 #
->>>>>>> b548c105d6766116d4eceb9eb1bca1c6ec91a12d
 gatkVersion,3.1-1-g07a4bf8
 splitAndTrimDir,${intermediateDir}/splitAndTrim/
 splitAndTrimBam,${splitAndTrimDir}${sampleName}.bam
 splitAndTrimBai,${splitAndTrimDir}${sampleName}.bai
-<<<<<<< HEAD
 ################################################################################
 ##VCF for GATK
 #
@@ -148,10 +138,13 @@ splitAndTrimBai,${splitAndTrimDir}${sampleName}.bai
 goldStandardVcf,${resDir}/${genomeBuild}/sv/1000G/Mills_and_1000G_gold_standard.indels.b37.vcf
 goldStandardVcfIdx,${goldStandardVcf}.idx
 
+oneKgPhase1SnpsVcf,${resDir}/${genomeBuild}/snp/1000G/1000G_phase1.snps.high_confidence.b37.vcf
+oneKgPhase1SnpsVcfIdx,${oneKgPhase1SnpsVcf}.idx
+
 oneKgPhase1IndelsVcf,${resDir}/${genomeBuild}/sv/1000G/1000G_phase1.indels.b37.vcf
 oneKgPhase1IndelsVcfIdx,${oneKgPhase1IndelsVcf}.idx
 
-dbsnpVcf,${resDir}/${genomeBuild}/snp/dbSNP/dbsnp_137.b37.vcf
+dbsnpVcf,${resDir}/${genomeBuild}/snp/dbSNP/dbsnp_138.b37.vcf
 dbsnpVcfIdx,${dbsnpVcf}.idx
 
 ################################################################################
@@ -164,14 +157,13 @@ realignmentIntervals,${indelRealignmentDir}/realignmentIntervals.list
 
 ################################################################################
 #IndelRealigner
-
+#indelRealignmentBam
 indelRealignmentBam,${indelRealignmentDir}${sampleName}.bam
 indelRealignmentBai,${indelRealignmentDir}${sampleName}.bai
-#for known realgnment when using haplotype caller because the haplotypecaller will consider multiple haplotypes instead of one when the GatkRealignerTargetCreator step is used, then later on the haplotyper can out put yet another bam file...to use for simple callers.
+#limit to known realignment when using haplotype caller because the haplotypecaller will consider multiple haplotypes instead of one when the GatkRealignerTargetCreator step is used.
 indelRealignmentTargets,${resDir}/${genomeBuild}/intervals/1000G_phase1.indels_Mills_and_1000G_gold_standard.indels.b37.human_g1k_v37.intervals
 
-
-################################################################################
+##############################################################################
 #BSQR(+PrintReads) default
 bsqrDir,${intermediateDir}/baseQualityScoreRecalibration/
 
@@ -183,6 +175,7 @@ bsqrBeforeGrp,${bsqrDir}${sampleName}.before.grp
 #(BSQR+)AnalyseCovariants default
 analyseCovarsDir,${intermediateDir}/CovariantAnalysis/
 bsqrAfterGrp,${bsqrDir}${sampleName}.after.grp
+analyseCovariatesPdf,${analyseCovarsDir}/${sampleName}.analysecovariates.pdf
 #stuffs that is missing 
 
 ################################################################################
@@ -195,28 +188,46 @@ haplotyperVcfIdx,${haplotyperVcf}.idx
 ################################################################################
 #variant annotation
 
+annotatorDir,${intermediateDir}/VariantAnnotation/
+snpEffVcf,${annotatorDir}/${project}.snpEff.vcf
+snpEffVcfIdx,${snpEffVcf}.idx
+snpEffVersion,3.6c
+#snpEff database resources...
+motifBin,/gcc/resources/snpEff/3.6c/GRCh37.75/motif.bin
+nextProtBin,/gcc/resources/snpEff/3.6c/GRCh37.75/nextProt.bin
+pwmsBin,/gcc/resources/snpEff/3.6c/GRCh37.75/pwms.bin
+regulation_CD4Bin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_CD4.bin
+regulation_GM06990Bin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_GM06990.bin
+regulation_GM12878Bin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_GM12878.bin
+regulation_H1ESCBin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_H1ESC.bin
+regulation_HeLaS3Bin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_HeLa-S3.bin
+regulation_HepG2Bin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_HepG2.bin
+regulation_HMECBin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_HMEC.bin
+regulation_HSMMBin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_HSMM.bin
+regulation_HUVECBin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_HUVEC.bin
+regulation_IMR90Bin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_IMR90.bin
+regulation_K562bBin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_K562b.bin
+regulation_K562Bin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_K562.bin
+regulation_NHABin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_NH-A.bin
+regulation_NHEKBin,/gcc/resources/snpEff/3.6c/GRCh37.75/regulation_NHEK.bin
+snpEffectPredictorBin,/gcc/resources/snpEff/3.6c/GRCh37.75/snpEffectPredictor.bin
+
+annotVcf,${annotatorDir}/${project}.annot.vcf
+annotVcfIdx,${annotVcf}.idx
+oneKgP1wgsVcf,${resDir}/
+oneKgP1wgsVcfIdx,${resDir}/
+cosmicDir,${resDir}/Cosmic/
+cosmicVersion,v70
+cosmicVcf,${cosmicDir}/${cosmicVersion}/CosmicCodingMuts.ensembl.vcf
+cosmicVcfIdx,${cosmicVcf}.idx
+
 ################################################################################
 #variant filtration
 
-=======
-#
-################################################################################
-#GatkRealignerTargetCreator
-#
-indelRealignmentDir,${intermediateDir}/indelRealignment/
-realignmentIntervals,${indelRealignmentDir}/realignmentIntervals.list
-goldStandardVcf,${resDir}/${genomeBuild}/sv/1000G/Mills_and_1000G_gold_standard.indels.b37.vcf
-#
-################################################################################
-#IndelRealigner
-IndelRealignmentBam,${indelRealignmentDir}${sampleName}.bam
-IndelRealignmentBai,${indelRealignmentDir}${sampleName}.bai
-#
->>>>>>> b548c105d6766116d4eceb9eb1bca1c6ec91a12d
 ################################################################################
 #CreateProjectMd aka CreateProjectMarkdown
 #
-projectMarkdown,${intermediateDir}/${project}.summary.md
+projectMarkdown,${intermediateDir}/${project}.summary.Rmd
 #
 #
 #test projectsamplesheet

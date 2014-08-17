@@ -22,7 +22,7 @@ rm $runDir/*d
 bash $molgenisBase/molgenis_compute.sh \
  --generate \
  -p $(pwd)/parameters.molgenis.csv \
- -p $(pwd)/projectsamplesheet.csv \
+ -p $(pwd)/samplesheet.csv \
  -w $(pwd)/workflow.csv \
  --backend pbs \
  --weave \
