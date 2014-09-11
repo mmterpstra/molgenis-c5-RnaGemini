@@ -20,6 +20,7 @@
 
 #string annotatorDir
 #string snpEffVersion
+#string snpEffStats
 #string snpEffVcf
 #string snpEffVcfIdx
 #string annotVcf
@@ -112,10 +113,11 @@ mkdir -p ${annotatorDir}
 #		2>$MainDir/$LogDir/$PatientBase.$Prog.err.log 
 
 
-if [ ! -e ${snpEffVcf} ]; then 
+if [ ! -e ${snpEffVcf} ] || [ ! -s ${snpEffVcf} ]; then 
 	java -Xmx4g -jar  $SNPEFF_HOME/snpEff.jar \
 	 -c $SNPEFF_HOME/snpEff.config \
-	 -v -o gatk \
+	 -stats ${snpEffStats} \
+         -v -o gatk \
 	 GRCh37.75 \
 	 ${haplotyperVcf} \
 	 1>${snpEffVcf}

@@ -32,7 +32,7 @@ getFile ${markDuplicatesBai}
 mkdir -p ${splitAndTrimDir}
 
 #it botches on base quality scores use --allow_potentially_misencoded_quality_scores / the tool is not paralel with nt/nct
-qualAction=$(samtools view /gcc/groups/oncogenetics/tmp01/projects/test/markDuplicates/samplePE.bam| \
+qualAction=$(samtools view ${markDuplicatesBam} | \
  head -1000000 | \
  awk '{gsub(/./,"&\n",$11);print $11}'| \
  sort -u| \

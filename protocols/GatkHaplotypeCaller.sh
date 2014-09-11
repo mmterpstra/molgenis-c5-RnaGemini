@@ -36,7 +36,8 @@ ${checkStage}
 
 #${addOrReplaceGroupsBam} sort unique and print like 'INPUT=file1.bam INPUT=file2.bam '
 bams=($(printf '%s\n' "${bsqrBam[@]}" | sort -u ))
-inputs=$(printf '-I %s ' $(printf '%s\n' ${bams[@]}))
+
+inputs=$(printf ' -I %s ' $(printf '%s\n' ${bams[@]}))
 
 mkdir -p ${haplotyperDir}
 
@@ -56,10 +57,5 @@ java -Xmx4g -jar $GATK_HOME/GenomeAnalysisTK.jar \
 
 putFile ${haplotyperVcf}
 putFile ${haplotyperVcfIdx}
-
-if [ ! -z "$PBS_JOBID" ]; then
-	echo "## "$(date)" Collecting PBS job statistics"
-	qstat -f $PBS_JOBID
-fi
 
 echo "## "$(date)" ##  $0 Done "

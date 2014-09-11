@@ -1,4 +1,4 @@
-#MOLGENIS walltime=35:59:00 mem=30gb nt=8
+#MOLGENIS walltime=35:59:00 nodes=1 mem=30gb ppn=8
 
 
 #Parameter mapping  #why not string foo,bar? instead of string foo\nstring bar
@@ -168,14 +168,14 @@ putFile ${starAlignmentPassTwoDir}/SJ.out.tab
 
 echo "## "$(date)" ##  $0 Done "
 
-if [ ! -z "$PBS_JOBID" ]; then
-	echo "## "$(date)" collecting PBS job statistics"
-	qstat -f $PBS_JOBID
-fi
-mterpstra@gcc-cluster-mgmt:/gcc/groups/oncogenetics/prm02/data/mytools/molgenis-compute-core-1.0.0-SNAPSHOT/workflows/RnaAnalysis> clear 
 
-mterpstra@gcc-cluster-mgmt:/gcc/groups/oncogenetics/prm02/data/mytools/molgenis-compute-core-1.0.0-SNAPSHOT/workflows/RnaAnalysis> cat protocols/StarRunAlignmentP2.sh
-#MOLGENIS walltime=35:59:00 mem=30gb nt=8
+
+
+
+
+
+
+
 
 
 #Parameter mapping  #why not string foo,bar? instead of string foo\nstring bar

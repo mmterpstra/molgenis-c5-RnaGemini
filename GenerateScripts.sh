@@ -6,9 +6,7 @@ tmp="tmp01"
 runDir=/gcc/groups/oncogenetics/${tmp}/projects/resourcesRNASeq/Workflow/runs/test
 molgenisBase=/gcc/groups/oncogenetics/prm02/data/mytools/molgenis-compute-core-1.0.0-SNAPSHOT
 
-echo "copy resources to tmp"
-cp -r $molgenisBase/workflows/RnaAnalysis/resources /gcc/groups/oncogenetics/$tmp/
-cp -r $molgenisBase/workflows/RnaAnalysis/tools /gcc/groups/oncogenetics/$tmp/
+
 echo "Convert parametersheet"
 perl $molgenisBase/workflows/RnaAnalysis/scripts/convertParametersGitToMolgenis.pl parameters.csv > parameters.molgenis.csv
 

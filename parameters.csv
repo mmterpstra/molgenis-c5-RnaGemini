@@ -49,8 +49,7 @@ ensemblVersion,75
 #onekgGgenomeDecoyFasta,${resDir}/${genomeBuild}/indices/human_g1k_v37_decoy.fasta
 onekgGenomeFasta,${resDir}/${genomeBuild}/indices/human_g1k_v37.fasta
 ##/gcc/resources/b37/intervals/Homo_sapiens.GRCh37.71.cut.sorted.gtf make for fluxcapacitor!!! Homo_sapiens.GRCh37.75.cut.sorted.gtf
-##genomeEnsembleAnnotationFile,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.gtf
-genomeEnsembleAnnotationFile,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.gtf
+genomeEnsembleAnnotationFile,${resDir}/Ensembl/release-${ensemblVersion}/gtf/homo_sapiens/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.gtf
 starAlignmentDir,${intermediateDir}/star/
 starAlignmentPassOneDir,${starAlignmentDir}/${internalId}_${sampleName}/alignmentP1/
 sjdbFileChrStartEnd,${starAlignmentPassOneDir}/SJ.out.tab
@@ -92,8 +91,8 @@ collectRnaSeqMetricsDir,${intermediateDir}/collectRnaSeqMetrics/
 collectRnaSeqMetrics,${collectRnaSeqMetricsDir}${sampleName}.rna_metrics.log
 collectRnaSeqMetricsChart,${collectRnaSeqMetricsDir}${sampleName}.chart.pdf
 
-genesRefFlat,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.refflat
-rRnaIntervalList,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.rrna.interval_list
+genesRefFlat,${resDir}/picard-tools/Ensembl${ensemblVersion}/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.refflat
+rRnaIntervalList,${resDir}//picard-tools/Ensembl${ensemblVersion}/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.rrna.interval_list
 
 ################################################################################
 ##CollectMultipleMetrics
@@ -114,7 +113,7 @@ samtoolsVersion,0.1.19
 
 fluxcapacitorVersion,1.6.1
 fluxcapacitorDir,${intermediateDir}/fluxcapacitor/
-fluxcapacitorGTF,${resDir}/${genomeBuild}/intervals/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.fluxcapacitor.sorted.gtf
+fluxcapacitorGTF,${resDir}//flux-capacitor/Ensembl${ensemblVersion}/${genomeLatSpecies}.${genomeGrchBuild}.${ensemblVersion}.fluxcapacitor.sorted.gtf
 fluxcapacitorExpressionGTF,${fluxcapacitorDir}/${sampleName}.${genomeGrchBuild}.${ensemblVersion}.expression.gtf
 
 ################################################################################
@@ -192,6 +191,8 @@ annotatorDir,${intermediateDir}/VariantAnnotation/
 snpEffVcf,${annotatorDir}/${project}.snpEff.vcf
 snpEffVcfIdx,${snpEffVcf}.idx
 snpEffVersion,3.6c
+snpEffStats,${annotatorDir}/${project}.snpEff.summary.html
+
 #snpEff database resources...
 motifBin,/gcc/resources/snpEff/3.6c/GRCh37.75/motif.bin
 nextProtBin,/gcc/resources/snpEff/3.6c/GRCh37.75/nextProt.bin
